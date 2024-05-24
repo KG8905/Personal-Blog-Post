@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog Posts</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+        .post {
+            border: 1px solid #ddd;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+        .post h2 {
+            margin: 0;
+            font-size: 24px;
+        }
+        .post p {
+            margin: 5px 0 0;
+        }
+        .post small {
+            color: #555;
+        }
+    </style>
+</head>
+<body>
+    <button class="back-button" onclick="goBack()">Back</button>
+    <h1>Blog Posts</h1>
+    <div id="postsContainer"></div>
+
+    <script>
+        function goBack() {
+            window.location.href = 'index.html' ; //
+        }
+        document.addEventListener('DOMContentLoaded', function() {
+            const postsContainer = document.getElementById('postsContainer');
+            let blogPosts = localStorage.getItem('blogPosts');
+
+            if (blogPosts) {
+                blogPosts = JSON.parse(blogPosts);
+
+                blogPosts.forEach(post => {
+                    const postElement = document.createElement('div');
+                    postElement.className = 'post';
+
+                    const postTitle = document.createElement('h2');
+                    postTitle.textContent = post.title;
+                    postElement.appendChild(postTitle);
+
+                    const postContent = document.createElement('p');
+                    postContent.textContent = post.content;
+                    postElement.appendChild(postContent);
+
+                    const postAuthor = document.createElement('small');
+                    postAuthor.textContent = `Posted by: ${post.username}`;
+                    postElement.appendChild(postAuthor);
+
+                    postsContainer.appendChild(postElement);
+                });
+            }
+        });
+    </script>
+</body>
+</html> 
